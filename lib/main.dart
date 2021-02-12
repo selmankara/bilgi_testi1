@@ -1,6 +1,7 @@
-import 'package:bilgi_testi/constants.dart';
 import 'package:bilgi_testi/test_veri.dart';
 import 'package:flutter/material.dart';
+
+import 'constants.dart';
 
 void main() {
   runApp(BilgiTesti());
@@ -32,40 +33,74 @@ class SoruSayfasi extends StatefulWidget {
 class _SoruSayfasiState extends State<SoruSayfasi> {
   List<Widget> secimler = [];
   TestVeri test_1 = TestVeri();
+  // void butonFonksiyonu(bool secilenButon) {
+  //   if (test_1.testBittiMi() == true) {
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         // return object of type Dialog
+  //         return AlertDialog(
+  //           title: new Text("Test Bitti!"),
+  //           //content: new Text("Alert Dialog body"),
+  //           actions: <Widget>[
+  //             // usually buttons at the bottom of the dialog
+  //             new FlatButton(
+  //               child: new Text("Başa Dön"),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //                 setState(() {
+  //                   test_1.testiSifirla();
+  //                   secimler = [];
+  //                 });
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //   } else {
+  //     setState(
+  //       () {
+  //         test_1.getSoruYaniti() == secilenButon
+  //             ? secimler.add(kDogruIkonu)
+  //             : secimler.add(kYanlisIkonu);
+  //         test_1.sonrakiSoru();
+  //       },
+  //     );
+  //   }
+  // }
+  int dogrular = 0;
+
   void butonFonksiyonu(bool secilenButon) {
     if (test_1.testBittiMi() == true) {
       showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: new Text("TESTİ BİTİRDİNİZ"),
-            //content: new Text("Alert Dialog body"),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              new FlatButton(
-                child: new Text("BAŞA DÖN"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    test_1.testiSifirla();
-                    secimler = [];
-                  });
-                },
-              ),
-            ],
-          );
-        },
-      );
+          context: context,
+          builder: (_) => new AlertDialog(
+                title: new Text("Sorular Bitti."),
+                content: new Text("Doğru Sayınız : $dogrular"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Testi Bitir'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      setState(() {
+                        test_1.testiSifirla();
+                        secimler = [];
+                        dogrular = 0;
+                      });
+                    },
+                  )
+                ],
+              ));
     } else {
-      setState(
-        () {
-          test_1.getSoruYaniti() == secilenButon
-              ? secimler.add(kDogruIkonu)
-              : secimler.add(kYanlisIkonu);
-          test_1.sonrakiSoru();
-        },
-      );
+      setState(() {
+        test_1.getSoruYaniti() == secilenButon
+            ? secimler.add(kDogruIkonu)
+            : secimler.add(kYanlisIkonu);
+
+        test_1.getSoruYaniti() == secilenButon ? dogrular++ : dogrular;
+        test_1.sonrakiSoru();
+      });
     }
   }
 
