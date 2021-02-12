@@ -1,6 +1,7 @@
 import 'package:bilgi_testi/soru.dart';
 
 class TestVeri {
+  int _soruIndex = 0;
   List<Soru> _soruBankasi = [
     Soru(
         soruMetni: 'Titanic gelmiş geçmiş en büyük gemidir.',
@@ -18,11 +19,30 @@ class TestVeri {
         soruYaniti: true),
     Soru(soruMetni: 'Fransızlar 80 demek için, 4 - 20 der.', soruYaniti: true)
   ];
-  String getSoruMetni(int soruIndex) {
-    return _soruBankasi[soruIndex].soruMetni;
+
+  String getSoruMetni() {
+    return _soruBankasi[_soruIndex].soruMetni;
   }
 
-  bool getSoruYaniti(int soruIndex) {
-    return _soruBankasi[soruIndex].soruYaniti;
+  bool getSoruYaniti() {
+    return _soruBankasi[_soruIndex].soruYaniti;
+  }
+
+  void sonrakiSoru() {
+    if (_soruIndex + 1 < _soruBankasi.length) {
+      _soruIndex++;
+    }
+  }
+
+  bool testBittiMi() {
+    if (_soruIndex + 1 >= _soruBankasi.length) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void testiSifirla() {
+    _soruIndex = 0;
   }
 }
